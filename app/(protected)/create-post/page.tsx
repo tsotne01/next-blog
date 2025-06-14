@@ -20,7 +20,7 @@ function Page() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(CreatePostSchema),
   });
@@ -44,7 +44,7 @@ function Page() {
     }
   };
   return (
-    <Card className="px-6 py-10">
+    <Card className="px-6 py-10 ">
       <CardTitle className="text-center text-5xl">Create Post</CardTitle>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
         <div className="flex flex-col gap-2.5">
@@ -66,7 +66,12 @@ function Page() {
             <p className="text-red-400 text-sm">{errors.content.message}</p>
           )}
         </div>
-        <Button className="mt-10">Publish Post</Button>
+        <Button
+          disabled={isSubmitting}
+          className="mt-10 disabled:bg-slate-500 disabled:text-black/50 cursor-pointer"
+        >
+          Publish Post
+        </Button>
       </form>
     </Card>
   );
