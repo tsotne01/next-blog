@@ -22,7 +22,7 @@ export async function POST(req: Request) {
     );
   }
   const token = jwt.sign(
-    { email: user.email },
+    { id: user.id },
     process.env.JWT_PASSCODE || "secretpasscode",
     { expiresIn: "1h" },
   );

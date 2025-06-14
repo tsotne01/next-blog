@@ -33,7 +33,7 @@ function Page() {
         },
       );
       console.log(response);
-      router.push("/dashboard");
+      router.push("/posts");
     } catch (err) {
       console.error(err);
     }

@@ -28,7 +28,7 @@ function Page() {
         password: data.password,
       });
       console.log(resp);
-      router.push("/dashboard");
+      router.push("/posts");
     } catch (err) {
       console.log(err);
     }
