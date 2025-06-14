@@ -1,16 +1,13 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Tektur } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const tektur = Tektur({
+  subsets: ["latin"], // Specify the subsets you need (e.g., 'latin', 'cyrillic', etc.)
+  display: "swap", // This ensures text is visible while the font is loading
+  variable: "--font-tektur", // Optional: Define a CSS variable for easier use with Tailwind CSS
+  weight: ["400", "700", "900"], // Specify the weights you plan to use
 });
 
 export const metadata: Metadata = {
@@ -26,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen w-screen overflow-x-hidden`}
+        className={`${tektur.className} ${tektur.variable} antialiased h-screen w-screen overflow-x-hidden`}
       >
         <ThemeProvider
           attribute="class"
