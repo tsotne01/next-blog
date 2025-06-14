@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import Link from "next/link";
 import axios from "axios";
 import type { SignInType } from "@/types/types";
+import { useRouter } from "next/navigation";
 
 function Page() {
   const {
@@ -18,6 +19,7 @@ function Page() {
     mode: "all",
     resolver: zodResolver(SignInSchema),
   });
+  const router = useRouter();
 
   const onSubmit = async (data: SignInType) => {
     try {
@@ -26,6 +28,7 @@ function Page() {
         password: data.password,
       });
       console.log(resp);
+      router.push("/dashboard");
     } catch (err) {
       console.log(err);
     }

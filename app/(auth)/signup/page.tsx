@@ -7,6 +7,7 @@ import type { SignUpType } from "@/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 function Page() {
@@ -18,6 +19,7 @@ function Page() {
     mode: "onBlur",
     resolver: zodResolver(SignUpSchema),
   });
+  const router = useRouter();
 
   const onSubmit = async (credentials: SignUpType) => {
     console.log(credentials);
@@ -31,6 +33,7 @@ function Page() {
         },
       );
       console.log(response);
+      router.push("/dashboard");
     } catch (err) {
       console.error(err);
     }

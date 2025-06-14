@@ -1,4 +1,6 @@
 import prisma from "@/lib/prisma";
+import jwt from "jsonwebtoken";
+import { cookies } from "next/headers";
 
 export async function POST(req: Request) {
   const body = await req.json();
@@ -19,8 +21,16 @@ export async function POST(req: Request) {
       { status: 401 },
     );
   }
-  return new Response(
-    JSON.stringify({ message: "Authorization successful", token: "sdadasd" }),
-    { status: 200 },
+  const token = jwt.sign(
+    { email: user.email },
+    process.env.JWT_PASSCODE || "secretpasscode",
+    { expiresIn: "1h" },
   );
+  const cookie = await cookies();
+
+  cookie.set("auth_token", token);
+
+  return new Response(JSON.stringify({ message: "Authorization successful" }), {
+    status: 200,
+  });
 }
