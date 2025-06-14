@@ -6,6 +6,8 @@ import { SignInSchema } from "@/schemas/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
+import axios from "axios";
+import type { SignInType } from "@/types/types";
 
 function Page() {
   const {
@@ -17,7 +19,17 @@ function Page() {
     resolver: zodResolver(SignInSchema),
   });
 
-  const onSubmit = () => console.log("sddsda");
+  const onSubmit = async (data: SignInType) => {
+    try {
+      const resp = await axios.post("/api/auth/signin", {
+        email: data.email,
+        password: data.password,
+      });
+      console.log(resp);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div className="max-w-[30%] w-1/2 sm:min-w-sm min-w-[80%]">

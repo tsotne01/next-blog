@@ -22,11 +22,14 @@ function Page() {
   const onSubmit = async (credentials: SignUpType) => {
     console.log(credentials);
     try {
-      const response = await axios.post("/api/auth/signup", {
-        email: credentials.email,
-        username: credentials.username,
-        password: credentials.password,
-      });
+      const response = await axios.post(
+        "http://localhost:3000/api/auth/signup",
+        {
+          email: credentials.email,
+          username: credentials.username,
+          password: credentials.password,
+        },
+      );
       console.log(response);
     } catch (err) {
       console.error(err);

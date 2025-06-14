@@ -7,3 +7,8 @@ export type SignUpTypeWithUserName = {
   password: string;
   username: string;
 };
+
+export type SignInType = {
+  email: string;
+  password: string;
+};
