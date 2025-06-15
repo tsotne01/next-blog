@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Tektur } from "next/font/google";
+import { Tektur } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 
 const tektur = Tektur({
-  subsets: ["latin"], // Specify the subsets you need (e.g., 'latin', 'cyrillic', etc.)
-  display: "swap", // This ensures text is visible while the font is loading
-  variable: "--font-tektur", // Optional: Define a CSS variable for easier use with Tailwind CSS
-  weight: ["400", "700", "900"], // Specify the weights you plan to use
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-tektur",
+  weight: ["400", "700", "900"],
 });
 
 export const metadata: Metadata = {
