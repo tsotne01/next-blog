@@ -1,9 +1,14 @@
+"use client";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { LogOutIcon, Pencil, UserRound } from "lucide-react";
+
 function Header() {
+  const handleLogout = () => {
+    document.cookie = "";
+  };
   return (
-    <header className="w-full md:w-[65%] mx-auto rounded-2xl mt-6 flex items-center justify-center border-b-sky-300 border-1  mb-6">
+    <header className="w-full mx-auto max-w-[1440px] rounded-2xl mt-6 flex items-center justify-center border-b-sky-300 border-1  mb-6">
       <nav className="w-full flex justify-center sm:p-2 md:p-4">
         <ul className="flex justify-around items-center w-full md:w-full px-6 text-base">
           <li>
@@ -32,7 +37,10 @@ function Header() {
               Profile
             </Link>
           </li>
-          <Button className="hover:bg-red-700 hover:text-white transition cursor-pointer flex gap-2 hover:underline">
+          <Button
+            onClick={handleLogout}
+            className="hover:bg-red-700 hover:text-white transition cursor-pointer flex gap-2 hover:underline"
+          >
             <LogOutIcon width={16} />
             Logout
           </Button>

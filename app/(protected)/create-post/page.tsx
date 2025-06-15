@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
+import { FileImage } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -65,6 +66,13 @@ function Page() {
           {errors.content && (
             <p className="text-red-400 text-sm">{errors.content.message}</p>
           )}
+        </div>
+        <div className="flex items-center justify-center mt-3.5">
+          <Label htmlFor="upload-file">
+            Upload Image
+            <FileImage />
+            <Input id="upload-file" className="hidden" type="file" />
+          </Label>
         </div>
         <Button
           disabled={isSubmitting}
