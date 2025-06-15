@@ -6,20 +6,14 @@ import { jwtVerify } from "jose";
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  const publicPaths = ["/signin", "/signup", "/"];
-
-  if (publicPaths.includes(pathname)) {
-    return NextResponse.next();
-  }
+  const publicRoutes = ["/", "/signin", "/signup"];
 
   const JWT_SECRET = process.env.JWT_PASSCODE;
-
   if (!JWT_SECRET) {
     console.error("JWT_SECRET environment variable is not set!");
-    const response = NextResponse.redirect(
+    return NextResponse.redirect(
       new URL("/signin?error=no_secret", request.url),
     );
-    return response;
   }
 
   const authToken = request.cookies.get("auth_token")?.value;
@@ -30,33 +24,28 @@ export async function middleware(request: NextRequest) {
       await jwtVerify(authToken, new TextEncoder().encode(JWT_SECRET));
       isAuthenticated = true;
     } catch (error) {
-      console.error(
-        "JWT verification failed for path:",
-        pathname,
-        "Error:",
-        error,
-      );
+      console.error("JWT verification failed:", error);
       isAuthenticated = false;
-
+      // Clear invalid token
       const response = NextResponse.redirect(
-        new URL(`/signin?from=${pathname}&error=expired_token`, request.url),
+        new URL("/signin?error=expired_token", request.url),
       );
       response.cookies.delete("auth_token");
       return response;
     }
   }
 
-  if (!isAuthenticated) {
-    const response = NextResponse.redirect(
-      new URL(`/signin?from=${pathname}`, request.url),
-    );
-    if (authToken && !isAuthenticated) {
-      response.cookies.delete("auth_token");
+  if (isAuthenticated) {
+    if (publicRoutes.includes(pathname)) {
+      return NextResponse.redirect(new URL("/posts", request.url));
     }
-    return response;
+    return NextResponse.next();
+  } else {
+    if (publicRoutes.includes(pathname)) {
+      return NextResponse.next();
+    }
+    return NextResponse.redirect(new URL("/signin", request.url));
   }
-
-  return NextResponse.next();
 }
 
 export const config = {
